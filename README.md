@@ -1,1 +1,1 @@
-# Intelligent Visitor Management Information System for EVSU-Ormoc Campus
+# Intelligent Visitor Management Information System Kiosk for EVSU-Ormoc Campus
