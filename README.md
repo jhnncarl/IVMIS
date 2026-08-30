@@ -1,1 +1,1 @@
-# IVMIS_Project
+# Intelligent Visitor Management Information System
