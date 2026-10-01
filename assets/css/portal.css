@@ -1,0 +1,1298 @@
+/* =============================================================
+   IVMIS PORTAL LAYOUT — portal.css
+   Sidebar, Top Navbar, Mobile Drawer & Multi-Role Theme System
+   ============================================================= */
+
+/* ── Core Variables ────────────────────────────────────────── */
+:root {
+    --primary-maroon: #8b0000;
+    --primary-maroon-hover: #6b0000;
+    --primary-maroon-light: #fff0f0;
+    --gold-accent: #d4af37;
+    --gold-light: #fef8e7;
+    --dark-sidebar-bg: #0f172a;
+    --dark-sidebar-hover: #1e293b;
+    --dark-sidebar-active: #281216;
+    --sidebar-text: #94a3b8;
+    --sidebar-text-active: #ffffff;
+    --topbar-bg: rgba(255, 255, 255, 0.94);
+    --topbar-border: #e2e8f0;
+    --body-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+
+    --sidebar-width: 260px;
+    --sidebar-collapsed-w: 76px;
+    --topbar-height: 68px;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.10);
+
+    --transition-fast: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Reset & Base Layout ──────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* Disable transitions during initial page load / refresh */
+.no-transition,
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+}
+
+body.portal-body {
+    font-family: var(--font-body);
+    background-color: var(--body-bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* ── App Shell Container ───────────────────────────────────── */
+.portal-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ============================================================
+   SIDEBAR COMPONENT
+   ============================================================ */
+.portal-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--dark-sidebar-bg);
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    transition: var(--transition-smooth);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Sidebar Collapsed State (Desktop) */
+.portal-sidebar.collapsed {
+    width: var(--sidebar-collapsed-w);
+}
+
+/* Sidebar Brand Header */
+.sidebar-header {
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    padding: 0 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.6);
+    position: relative;
+    transition: padding var(--transition-smooth);
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    transition: gap var(--transition-smooth);
+}
+
+.sidebar-logo {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transition: width var(--transition-smooth), height var(--transition-smooth), margin var(--transition-smooth);
+}
+
+.sidebar-brand-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 180px;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.18s ease, max-width var(--transition-smooth), visibility 0.18s ease;
+}
+
+.brand-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+}
+
+.brand-subtitle {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--gold-accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Sidebar Collapse Toggle Button */
+.sidebar-toggle-btn {
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--sidebar-text);
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: right var(--transition-smooth), width var(--transition-smooth), height var(--transition-smooth), background 0.2s ease, border-color 0.2s ease, transform var(--transition-smooth);
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.sidebar-toggle-btn:hover {
+    background: var(--primary-maroon);
+    border-color: var(--primary-maroon);
+    color: #ffffff;
+}
+
+.sidebar-toggle-btn svg {
+    transition: transform var(--transition-smooth);
+}
+
+/* ── Collapsed Header & Logo Smooth Transitions ── */
+.portal-sidebar.collapsed .sidebar-header {
+    padding: 0;
+    justify-content: center;
+}
+
+.portal-sidebar.collapsed .sidebar-brand {
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+}
+
+.portal-sidebar.collapsed .sidebar-logo {
+    width: 34px;
+    height: 34px;
+    margin: 0 auto;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.portal-sidebar.collapsed .sidebar-brand-text {
+    opacity: 0;
+    max-width: 0;
+    visibility: hidden;
+}
+
+.portal-sidebar.collapsed .sidebar-toggle-btn {
+    right: -13px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--primary-maroon);
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.portal-sidebar.collapsed .sidebar-toggle-btn:hover {
+    background: #a00000;
+    transform: translateY(-50%) scale(1.12);
+}
+
+.portal-sidebar.collapsed .sidebar-toggle-btn svg {
+    transform: rotate(180deg);
+}
+
+/* Role Badge Container */
+.sidebar-role-badge-container {
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.role-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: var(--transition-fast);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.role-badge-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.role-badge-text {
+    max-width: 140px;
+    opacity: 1;
+    visibility: visible;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.18s ease, max-width var(--transition-smooth), visibility 0.18s ease;
+}
+
+/* Collapsed Role Badge */
+.portal-sidebar.collapsed .sidebar-role-badge-container {
+    padding: 0.8rem 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.portal-sidebar.collapsed .role-badge {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0 auto;
+    justify-content: center;
+    border-radius: 12px;
+    gap: 0;
+}
+
+.portal-sidebar.collapsed .role-badge-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.portal-sidebar.collapsed .role-badge-text {
+    opacity: 0;
+    max-width: 0;
+    visibility: hidden;
+}
+
+/* Role Variations */
+.role-badge.security {
+    background: rgba(139, 0, 0, 0.22);
+    border: 1px solid rgba(220, 38, 38, 0.35);
+    color: #fca5a5;
+}
+
+.role-badge.admin {
+    background: rgba(212, 175, 55, 0.18);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #fef08a;
+}
+
+.role-badge.system_admin {
+    background: rgba(99, 102, 241, 0.22);
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    color: #c7d2fe;
+}
+
+/* Sidebar Navigation Menu */
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 100%;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+}
+
+.nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.nav-section-title {
+    font-size: 0.66rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+    padding: 0 0.6rem 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 0.85rem;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-item:hover {
+    background: var(--dark-sidebar-hover);
+    color: #ffffff;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.4) 0%, rgba(139, 0, 0, 0.2) 100%);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    color: #ffffff;
+}
+
+.nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 4px;
+    background: var(--gold-accent);
+    border-radius: 0 4px 4px 0;
+}
+
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nav-label {
+    max-width: 180px;
+    opacity: 1;
+    visibility: visible;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.18s ease, max-width var(--transition-smooth), visibility 0.18s ease;
+}
+
+.nav-counter-badge {
+    margin-left: auto;
+    background: var(--primary-maroon);
+    color: #ffffff;
+    font-size: 0.70rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 99px;
+}
+
+/* Collapsed Navigation Items */
+.portal-sidebar.collapsed .sidebar-nav {
+    padding: 0.8rem 0.5rem;
+    gap: 0.75rem;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.portal-sidebar.collapsed .nav-section {
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+}
+
+.portal-sidebar.collapsed .nav-section-title {
+    opacity: 0;
+    max-height: 0;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+}
+
+.portal-sidebar.collapsed .nav-item {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    margin: 0 auto;
+    justify-content: center;
+    border-radius: 12px;
+    position: relative;
+    gap: 0;
+}
+
+.portal-sidebar.collapsed .nav-label {
+    opacity: 0;
+    max-width: 0;
+    visibility: hidden;
+}
+
+.portal-sidebar.collapsed .nav-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.portal-sidebar.collapsed .nav-item.active {
+    background: linear-gradient(135deg, #8b0000 0%, #6b0000 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 14px rgba(139, 0, 0, 0.4);
+}
+
+.portal-sidebar.collapsed .nav-item.active::before {
+    display: none;
+}
+
+.portal-sidebar.collapsed .nav-counter-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 0.55rem;
+    font-weight: 800;
+    padding: 1px 4px;
+    border-radius: 99px;
+    background: #dc2626;
+    color: #ffffff;
+    border: 1.5px solid var(--dark-sidebar-bg);
+    z-index: 3;
+    line-height: 1;
+}
+
+/* Sidebar Footer User Info */
+.sidebar-user-footer {
+    padding: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.7);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ── Tooltips for Collapsed Sidebar Items ── */
+.portal-sidebar.collapsed [data-tooltip] {
+    position: relative;
+}
+
+.portal-sidebar.collapsed [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%) scale(0.92);
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1200;
+}
+
+.portal-sidebar.collapsed [data-tooltip]::before {
+    content: '';
+    position: absolute;
+    left: calc(100% + 6px);
+    top: 50%;
+    transform: translateY(-50%) scale(0.92);
+    border: 5px solid transparent;
+    border-right-color: #0f172a;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1200;
+}
+
+.portal-sidebar.collapsed [data-tooltip]:hover::after,
+.portal-sidebar.collapsed [data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) scale(1);
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-maroon), #a00000);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid rgba(212, 175, 55, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 160px;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.18s ease, max-width var(--transition-smooth), visibility 0.18s ease;
+}
+
+.portal-sidebar.collapsed .sidebar-user-footer {
+    padding: 0.85rem 0.5rem;
+    justify-content: center;
+    gap: 0;
+}
+
+.portal-sidebar.collapsed .user-avatar {
+    width: 42px;
+    height: 42px;
+    margin: 0 auto;
+}
+
+.portal-sidebar.collapsed .user-details {
+    opacity: 0;
+    max-width: 0;
+    visibility: hidden;
+}
+
+.portal-sidebar.collapsed .logout-btn-sidebar {
+    opacity: 0;
+    max-width: 0;
+    visibility: hidden;
+}
+
+.user-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.user-role-text {
+    font-size: 0.72rem;
+    color: var(--sidebar-text);
+}
+
+.logout-btn-sidebar {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--sidebar-text);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.logout-btn-sidebar:hover {
+    background: rgba(220, 38, 38, 0.2);
+    color: #fca5a5;
+}
+
+.portal-sidebar.collapsed .logout-btn-sidebar {
+    display: none;
+}
+
+
+/* ============================================================
+   MAIN CONTENT SHELL & TOP NAVBAR
+   ============================================================ */
+.portal-main {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: var(--transition-smooth);
+}
+
+.portal-sidebar.collapsed+.portal-main {
+    margin-left: var(--sidebar-collapsed-w);
+}
+
+/* Top Navbar */
+.portal-navbar {
+    height: var(--topbar-height);
+    background: var(--topbar-bg);
+    border-bottom: 1px solid var(--topbar-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Mobile Sidebar Trigger */
+.mobile-sidebar-toggle {
+    display: none;
+    background: #f1f5f9;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.mobile-sidebar-toggle:hover {
+    background: var(--primary-maroon-light);
+    color: var(--primary-maroon);
+}
+
+.page-title-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.page-breadcrumb {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Navbar Right Controls */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Live Header Clock */
+.navbar-clock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0.3rem 0.75rem;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+}
+
+.clock-time {
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--primary-maroon);
+    line-height: 1.1;
+}
+
+.clock-date {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Role Switcher Pills (Demo/Preview Selector) */
+.role-switcher-dropdown {
+    position: relative;
+}
+
+.role-switcher-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 99px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.role-switcher-btn:hover {
+    background: #ffffff;
+    border-color: var(--primary-maroon);
+    box-shadow: var(--shadow-sm);
+}
+
+.role-indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold-accent);
+}
+
+/* Notifications Button & Dropdown */
+.notification-dropdown-container {
+    position: relative;
+}
+
+.icon-nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.icon-nav-btn:hover {
+    background: var(--primary-maroon-light);
+    color: var(--primary-maroon);
+    border-color: rgba(139, 0, 0, 0.2);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+}
+
+/* User Profile Menu Button */
+.user-menu-dropdown {
+    position: relative;
+}
+
+.user-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    border-radius: 99px;
+    transition: var(--transition-fast);
+}
+
+.user-profile-btn:hover {
+    opacity: 0.9;
+}
+
+/* Dropdown Menus Common Styling */
+.dropdown-menu-card {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    width: 280px;
+    max-width: calc(100vw - 1.5rem);
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    z-index: 1100;
+    animation: dropDownSlide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+@keyframes dropDownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-header {
+    padding: 0.85rem 1rem;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown-body {
+    padding: 0.4rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: var(--primary-maroon-light);
+    color: var(--primary-maroon);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.3rem 0;
+}
+
+/* ============================================================
+   PAGE CONTENT CONTAINER
+   ============================================================ */
+.portal-content-container {
+    flex: 1;
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Responsive Grid Utility for Stat Cards & Dashboard Layouts */
+.stat-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+/* Responsive Table Wrapper */
+.responsive-table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-md);
+}
+
+/* Off-Canvas Backdrop for Mobile */
+.mobile-sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 995;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE LAYOUT BREAKPOINTS
+   ============================================================ */
+@media (max-width: 900px) {
+    .portal-sidebar {
+        transform: translateX(-100%);
+        width: 260px !important;
+    }
+
+    .portal-sidebar .sidebar-toggle-btn {
+        display: none !important;
+    }
+
+    .portal-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .mobile-sidebar-backdrop.active {
+        display: block;
+    }
+
+    .portal-main {
+        margin-left: 0 !important;
+    }
+
+    .mobile-sidebar-toggle {
+        display: flex;
+    }
+
+    .navbar-clock {
+        display: none;
+    }
+
+    /* Reset collapsed state styles on mobile drawer */
+    .portal-sidebar.collapsed .sidebar-header {
+        padding: 0 1.2rem !important;
+        justify-content: flex-start !important;
+    }
+
+    .portal-sidebar.collapsed .sidebar-brand {
+        justify-content: flex-start !important;
+        gap: 0.8rem !important;
+    }
+
+    .portal-sidebar.collapsed .sidebar-logo {
+        margin: 0 !important;
+        width: 38px !important;
+        height: 38px !important;
+    }
+
+    .portal-sidebar.collapsed .sidebar-brand-text,
+    .portal-sidebar.collapsed .role-badge-text,
+    .portal-sidebar.collapsed .nav-label,
+    .portal-sidebar.collapsed .user-details {
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        max-width: 180px !important;
+    }
+
+    .portal-sidebar.collapsed .sidebar-role-badge-container {
+        padding: 0.9rem 1.2rem !important;
+    }
+
+    .portal-sidebar.collapsed .role-badge {
+        width: auto !important;
+        height: auto !important;
+        padding: 0.5rem 0.75rem !important;
+        justify-content: flex-start !important;
+        gap: 0.6rem !important;
+    }
+
+    .portal-sidebar.collapsed .sidebar-nav {
+        padding: 1rem 0.75rem !important;
+        gap: 1.25rem !important;
+        align-items: stretch !important;
+    }
+
+    .portal-sidebar.collapsed .nav-section {
+        align-items: stretch !important;
+    }
+
+    .portal-sidebar.collapsed .nav-section-title {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        max-height: 50px !important;
+        padding: 0 0.6rem 0.2rem !important;
+    }
+
+    .portal-sidebar.collapsed .nav-item {
+        width: auto !important;
+        height: auto !important;
+        padding: 0.7rem 0.85rem !important;
+        justify-content: flex-start !important;
+        gap: 0.85rem !important;
+    }
+
+    .portal-sidebar.collapsed .sidebar-user-footer {
+        padding: 0.85rem !important;
+        justify-content: flex-start !important;
+        gap: 0.75rem !important;
+    }
+
+    .portal-sidebar.collapsed .logout-btn-sidebar {
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        max-width: none !important;
+    }
+
+    .portal-content-container {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .portal-navbar {
+        padding: 0 0.85rem;
+    }
+
+    .navbar-left {
+        gap: 0.6rem;
+    }
+
+    .page-title {
+        font-size: 1.02rem;
+    }
+
+    .page-breadcrumb {
+        display: none;
+    }
+
+    .navbar-right {
+        gap: 0.4rem;
+    }
+
+    .role-switcher-btn {
+        padding: 0.38rem 0.55rem;
+        font-size: 0.74rem;
+    }
+
+    .portal-content-container {
+        padding: 0.85rem;
+    }
+
+    .stat-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .dashboard-banner {
+        padding: 1rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .quick-actions-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .quick-actions-group a {
+        width: 100%;
+        justify-content: center;
+    }
+
+    footer {
+        padding: 1rem 0.85rem !important;
+        font-size: 0.72rem !important;
+    }
+}
+
+@keyframes navbarFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes contentFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes navItemSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.portal-navbar {
+    animation: navbarFadeSlide 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.page-title-block {
+    animation: contentFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.06s;
+}
+
+.navbar-right>* {
+    animation: contentFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.navbar-right>*:nth-child(1) {
+    animation-delay: 0.08s;
+}
+
+.navbar-right>*:nth-child(2) {
+    animation-delay: 0.14s;
+}
+
+.navbar-right>*:nth-child(3) {
+    animation-delay: 0.20s;
+}
+
+.navbar-right>*:nth-child(4) {
+    animation-delay: 0.26s;
+}
+
+.portal-content-container {
+    animation: contentFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.10s;
+}
+
+/* Staggered entrance for dashboard cards & widgets */
+.portal-content-container>* {
+    animation: contentFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.portal-content-container>*:nth-child(1) {
+    animation-delay: 0.12s;
+}
+
+.portal-content-container>*:nth-child(2) {
+    animation-delay: 0.20s;
+}
+
+.portal-content-container>*:nth-child(3) {
+    animation-delay: 0.28s;
+}
+
+.portal-content-container>*:nth-child(4) {
+    animation-delay: 0.36s;
+}
+
+.portal-content-container>*:nth-child(5) {
+    animation-delay: 0.44s;
+}
+
+/* Sidebar Navigation Items Cascade */
+.sidebar-nav .nav-item {
+    animation: navItemSlideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.sidebar-nav .nav-section:nth-child(1) .nav-item:nth-child(1) {
+    animation-delay: 0.06s;
+}
+
+.sidebar-nav .nav-section:nth-child(1) .nav-item:nth-child(2) {
+    animation-delay: 0.10s;
+}
+
+.sidebar-nav .nav-section:nth-child(1) .nav-item:nth-child(3) {
+    animation-delay: 0.14s;
+}
+
+.sidebar-nav .nav-section:nth-child(1) .nav-item:nth-child(4) {
+    animation-delay: 0.18s;
+}
+
+.sidebar-nav .nav-section:nth-child(2) .nav-item:nth-child(1) {
+    animation-delay: 0.22s;
+}
+
+.sidebar-nav .nav-section:nth-child(2) .nav-item:nth-child(2) {
+    animation-delay: 0.26s;
+}
+
+.sidebar-nav .nav-section:nth-child(2) .nav-item:nth-child(3) {
+    animation-delay: 0.30s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .portal-navbar,
+    .page-title-block,
+    .navbar-right>*,
+    .portal-content-container,
+    .portal-content-container>*,
+    .sidebar-nav .nav-item {
+        animation: none !important;
+    }
+}
