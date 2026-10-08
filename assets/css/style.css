@@ -736,10 +736,12 @@ body::before {
     grid-template-columns: 1.3fr 1fr;
     gap: 1.5rem;
     width: 100%;
+    align-items: start;
 }
 
 .purpose-selection-card,
-.photo-capture-card {
+.photo-capture-card,
+.verification-card {
     background: var(--card-bg);
     border: 1px solid var(--border-light);
     border-radius: 20px;
@@ -748,6 +750,11 @@ body::before {
     flex-direction: column;
     gap: 1.25rem;
     box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+}
+
+.verification-card {
+    border-color: #86efac;
+    box-shadow: 0 10px 30px -5px rgba(22, 101, 52, 0.08);
 }
 
 .card-section-title {
@@ -764,6 +771,10 @@ body::before {
 }
 
 .card-section-title svg { color: var(--primary-maroon); }
+
+.verification-card .card-section-title svg {
+    color: #166534;
+}
 
 .purpose-options-grid {
     display: grid;
@@ -880,6 +891,161 @@ body::before {
     display: flex;
     gap: 0.75rem;
     width: 100%;
+}
+
+/* ==========================================
+   VISITOR VERIFICATION CARD STYLES
+   ========================================== */
+
+.verification-status-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    padding: 1.35rem 1.25rem;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 2px solid #86efac;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.08);
+}
+
+.verification-icon-wrapper {
+    width: 68px;
+    height: 68px;
+    background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(22, 101, 52, 0.25);
+    position: relative;
+}
+
+.verification-icon-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #86efac, #4ade80);
+    opacity: 0.3;
+    z-index: -1;
+}
+
+.verification-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.verification-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #166534;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.verification-message {
+    font-size: 0.82rem;
+    color: #15803d;
+    margin: 0;
+    line-height: 1.4;
+    max-width: 320px;
+    font-weight: 500;
+}
+
+.verification-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+    color: #ffffff;
+    padding: 0.4rem 1rem;
+    border-radius: 99px;
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.2);
+}
+
+.verification-badge-dot {
+    width: 8px;
+    height: 8px;
+    background: #86efac;
+    border-radius: 50%;
+    animation: pulseGlow 1.8s infinite;
+}
+
+.verification-note {
+    font-size: 0.82rem;
+    color: #15803d;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Visitor Profile Summary Section */
+.visitor-profile-summary {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
+    margin-top: 0.25rem;
+}
+
+.profile-summary-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--dark-slate);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.profile-summary-header svg {
+    color: var(--primary-maroon);
+}
+
+.profile-summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profile-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+}
+
+.profile-detail-item .detail-label {
+    color: var(--muted-text);
+    font-weight: 600;
+}
+
+.profile-detail-item .detail-value {
+    color: var(--dark-slate);
+    font-weight: 700;
+    font-family: var(--font-heading);
+}
+
+.profile-detail-item .status-active {
+    color: #166534;
+    background: #dcfce7;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
 }
 
 /* ==========================================
@@ -1960,6 +2126,8 @@ body::before {
     .captured-review-grid { grid-template-columns: 1fr; }
     .form-grid-2col { grid-template-columns: 1fr; }
     .full-width-field { grid-column: span 1; }
+    .verification-status-box { padding: 1.5rem 1rem; }
+    .visitor-profile-summary { padding: 1rem; }
 }
 
 @media (max-width: 768px) {
@@ -2624,8 +2792,8 @@ body::before {
 }
 
 .returning-avatar-thumb {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     border: 2px solid var(--gold-accent);
     object-fit: cover;

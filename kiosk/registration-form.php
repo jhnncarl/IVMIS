@@ -222,7 +222,7 @@
 
             // Guard Check: Returning visitors bypass Step 2 automatically
             if (sessionStorage.getItem('isReturningVisitor') === 'true') {
-                window.location.href = 'capture-photo.php';
+                window.location.href = 'returning-visitor.php';
                 return;
             }
 

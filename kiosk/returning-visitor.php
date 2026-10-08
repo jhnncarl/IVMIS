@@ -2,12 +2,12 @@
     <div class="kiosk-layout">
         <!-- Top Navigation Bar & Progress Header -->
         <div class="kiosk-top-nav-bar">
-            <a href="registration-form.php" class="kiosk-back-btn" title="Return to Registration Form">
+            <a href="capture-id.php" class="kiosk-back-btn" title="Return to ID Scan">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
-                <span>Back to Registration Form</span>
+                <span>Back to ID Scan</span>
             </a>
 
             <div class="kiosk-progress-card">
@@ -21,11 +21,11 @@
                     </div>
                     <div class="progress-step completed-step">
                         <span class="step-num">✓</span>
-                        <span class="step-lbl">Registration Form</span>
+                        <span class="step-lbl">Profile Verified</span>
                     </div>
                     <div class="progress-step active-step">
                         <span class="step-num">3</span>
-                        <span class="step-lbl">Purpose & Photo</span>
+                        <span class="step-lbl">Purpose & Verification</span>
                     </div>
                     <div class="progress-step">
                         <span class="step-num">4</span>
@@ -39,11 +39,23 @@
             </div>
         </div>
 
+        <!-- Returning Visitor Welcome Banner -->
+        <div class="returning-banner-card">
+            <div class="returning-banner-info">
+                <img id="returningAvatar" src="../assets/images/evsu_logo.png" alt="Stored Profile Avatar" class="returning-avatar-thumb">
+                <div class="returning-banner-text">
+                    <h3 id="returningWelcomeName">Welcome Back!</h3>
+                    <p>Your stored profile has been verified. Registration details skipped for faster check-in.</p>
+                </div>
+            </div>
+            <span class="returning-tag-pill">RETURNING VISITOR</span>
+        </div>
+
         <!-- Main Step Content Container -->
         <div class="capture-container">
             <div class="section-title-box">
-                <h2 class="section-title">Step 3: Purpose of Visit & Photo</h2>
-                <p class="section-subtitle">Select why you are visiting EVSU-Ormoc campus today, specify the person you intend to visit (if applicable), and capture your visitor photo.</p>
+                <h2 class="section-title">Step 3: Purpose of Visit & Verification</h2>
+                <p class="section-subtitle">Select why you are visiting EVSU-Ormoc campus today and specify the person you intend to visit (if applicable).</p>
             </div>
 
             <div class="purpose-photo-grid">
@@ -128,61 +140,68 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Visitor Photo Capture -->
-                <div class="photo-capture-card">
+                <!-- Right Column: Visitor Verification Card -->
+                <div class="verification-card">
                     <div class="card-section-title">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                        <span id="photoCardTitle">Visitor Headshot Photo</span> <span class="required-star" id="photoReqStar">*</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <span>Verification Status</span>
                     </div>
 
-                    <!-- Photo Camera Viewfinder Box -->
-                    <div class="photo-viewport-box">
-                        <video id="headshotVideo" autoplay playsinline muted></video>
-                        <canvas id="headshotCanvas" style="display: none;"></canvas>
-                        <img id="headshotPreviewImg" style="display: none; width: 100%; height: 100%; object-fit: cover;" alt="Visitor Photo Preview">
-
-                        <!-- Face Alignment Oval Guide -->
-                        <div class="face-target-oval" id="faceTargetOval">
-                            <div class="face-oval-ring"></div>
-                            <span class="face-guide-text">Position face inside oval</span>
+                    <!-- Verification Status Display -->
+                    <div class="verification-status-box">
+                        <div class="verification-icon-wrapper">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
                         </div>
-
-                        <!-- Fallback / Demo Placeholder -->
-                        <div class="camera-placeholder" id="photoPlaceholder" style="display: none;">
-                            <div class="placeholder-icon">
-                                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <div class="verification-content">
+                            <h3 class="verification-title">Visitor Verified</h3>
+                            <p class="verification-message">Your identity has been successfully verified through Valid ID scan and OCR processing.</p>
+                            <div class="verification-badge">
+                                <span class="verification-badge-dot"></span>
+                                <span class="verification-badge-text">Returning Visitor</span>
                             </div>
-                            <h4>Camera Feed Offline / Demo Mode</h4>
-                            <p>Click <strong>Take Photo Headshot</strong> to capture sample visitor photo.</p>
                         </div>
                     </div>
 
-                    <!-- Photo Action Controls -->
-                    <div class="photo-controls-bar">
-                        <button type="button" class="scanner-btn scanner-btn-capture" id="btnTakeHeadshot">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
-                            <span id="btnTakeHeadshotText">Take Photo Headshot</span>
-                        </button>
-                        
-                        <button type="button" class="scanner-btn scanner-btn-cancel" id="btnRetakeHeadshot" style="display: none;">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                            Retake / Update Photo
-                        </button>
-
-                        <button type="button" class="scanner-btn scanner-btn-upload" id="btnUploadHeadshot">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                            Upload Photo
-                        </button>
-                        <input type="file" id="fileHeadshotInput" accept="image/*" style="display: none;">
+                    <!-- Visitor Profile Summary -->
+                    <div class="visitor-profile-summary">
+                        <div class="profile-summary-header">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Profile on File</span>
+                        </div>
+                        <div class="profile-summary-details">
+                            <div class="profile-detail-item">
+                                <span class="detail-label">Name:</span>
+                                <span class="detail-value" id="profileName">Loading...</span>
+                            </div>
+                            <div class="profile-detail-item">
+                                <span class="detail-label">ID Document:</span>
+                                <span class="detail-value" id="profileIDType">PhilID / National ID</span>
+                            </div>
+                            <div class="profile-detail-item">
+                                <span class="detail-label">Mobile:</span>
+                                <span class="detail-value" id="profilePhone">+63 917 123 4567</span>
+                            </div>
+                            <div class="profile-detail-item">
+                                <span class="detail-label">Status:</span>
+                                <span class="detail-value status-active">Active Record</span>
+                            </div>
+                            <div class="profile-detail-item">
+                                <span class="detail-label">Last Visit:</span>
+                                <span class="detail-value" id="lastVisitDate">Previously Registered</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Bottom Action Footer Bar -->
             <div class="action-footer-bar" style="margin-top: 1.5rem;">
-                <a href="registration-form.php" class="button-secondary action-btn-back" id="btnFooterBack">
+                <a href="capture-id.php" class="button-secondary action-btn-back">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                    <span id="footerBackText">Back to Registration Details</span>
+                    Back to ID Scan
                 </a>
                 <button type="button" class="button-primary action-btn-next" id="btnProceedToReview">
                     <span>Proceed to Final Review</span>
@@ -191,7 +210,6 @@
             </div>
         </div>
     </div>
-    </main>
 
     <!-- Page JavaScript -->
     <script>
@@ -212,8 +230,19 @@
             updateClock();
             setInterval(updateClock, 1000);
 
-            // First-time visitor only - no returning visitor handling
-            const isReturning = false;
+            // Load returning visitor data
+            const visitorName = sessionStorage.getItem('visitorName') || 'Visitor';
+            const storedPhoto = sessionStorage.getItem('visitorPhoto') || '../assets/images/evsu_logo.png';
+            const idType = sessionStorage.getItem('visitorIDType') || 'PhilID / National ID';
+            const phone = sessionStorage.getItem('visitorPhone') || '+63 917 123 4567';
+            const lastVisit = sessionStorage.getItem('visitorLastVisit') || 'Previously Registered';
+
+            document.getElementById('returningWelcomeName').textContent = `Welcome Back, ${visitorName}!`;
+            document.getElementById('returningAvatar').src = storedPhoto;
+            document.getElementById('profileName').textContent = visitorName;
+            document.getElementById('profileIDType').textContent = idType;
+            document.getElementById('profilePhone').textContent = phone;
+            document.getElementById('lastVisitDate').textContent = lastVisit;
 
             // Purpose Selection
             const purposeCards = document.querySelectorAll('.purpose-card');
@@ -240,148 +269,16 @@
                 personToVisitInput.value = savedPerson;
             }
 
-            // Camera Setup
-            const headshotVideo = document.getElementById('headshotVideo');
-            const headshotCanvas = document.getElementById('headshotCanvas');
-            const headshotPreviewImg = document.getElementById('headshotPreviewImg');
-            const photoPlaceholder = document.getElementById('photoPlaceholder');
-            const faceTargetOval = document.getElementById('faceTargetOval');
-
-            const btnTakeHeadshot = document.getElementById('btnTakeHeadshot');
-            const btnRetakeHeadshot = document.getElementById('btnRetakeHeadshot');
-            const btnUploadHeadshot = document.getElementById('btnUploadHeadshot');
-            const fileHeadshotInput = document.getElementById('fileHeadshotInput');
-            const btnProceedToReview = document.getElementById('btnProceedToReview');
-
-            let photoStream = null;
-            let photoCaptured = false;
-
-            // If returning visitor, show stored photo by default
-            if (isReturning && sessionStorage.getItem('visitorPhoto')) {
-                headshotPreviewImg.src = sessionStorage.getItem('visitorPhoto');
-                headshotVideo.style.display = 'none';
-                faceTargetOval.style.display = 'none';
-                headshotPreviewImg.style.display = 'block';
-                photoCaptured = true;
-
-                btnTakeHeadshot.style.display = 'none';
-                btnRetakeHeadshot.style.display = 'inline-flex';
-            } else {
-                startPhotoCamera();
-            }
-
-            async function startPhotoCamera() {
-                try {
-                    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                        photoStream = await navigator.mediaDevices.getUserMedia({
-                            video: { width: { ideal: 640 }, height: { ideal: 640 }, facingMode: "user" }
-                        });
-                        headshotVideo.srcObject = photoStream;
-                        headshotVideo.style.display = 'block';
-                        headshotPreviewImg.style.display = 'none';
-                        photoPlaceholder.style.display = 'none';
-                        faceTargetOval.style.display = 'flex';
-                    } else {
-                        showPhotoFallback();
-                    }
-                } catch (err) {
-                    console.warn("User camera unavailable. Showing placeholder.", err);
-                    showPhotoFallback();
-                }
-            }
-
-            function stopPhotoCamera() {
-                if (photoStream) {
-                    photoStream.getTracks().forEach(track => track.stop());
-                    photoStream = null;
-                }
-            }
-
-            function showPhotoFallback() {
-                headshotVideo.style.display = 'none';
-                photoPlaceholder.style.display = 'flex';
-                faceTargetOval.style.display = 'none';
-            }
-
-            // Take Photo Snap
-            btnTakeHeadshot.addEventListener('click', function() {
-                if (photoStream && headshotVideo.videoWidth) {
-                    headshotCanvas.width = headshotVideo.videoWidth;
-                    headshotCanvas.height = headshotVideo.videoHeight;
-                    const ctx = headshotCanvas.getContext('2d');
-                    ctx.drawImage(headshotVideo, 0, 0, headshotCanvas.width, headshotCanvas.height);
-                    const photoUrl = headshotCanvas.toDataURL('image/png');
-                    headshotPreviewImg.src = photoUrl;
-                    sessionStorage.setItem('visitorPhoto', photoUrl);
-                } else {
-                    const fallbackUrl = '../assets/images/evsu_logo.png';
-                    headshotPreviewImg.src = fallbackUrl;
-                    sessionStorage.setItem('visitorPhoto', fallbackUrl);
-                }
-
-                stopPhotoCamera();
-                headshotVideo.style.display = 'none';
-                faceTargetOval.style.display = 'none';
-                headshotPreviewImg.style.display = 'block';
-                photoCaptured = true;
-
-                btnTakeHeadshot.style.display = 'none';
-                btnRetakeHeadshot.style.display = 'inline-flex';
-            });
-
-            // Retake Photo
-            btnRetakeHeadshot.addEventListener('click', function() {
-                photoCaptured = false;
-                btnRetakeHeadshot.style.display = 'none';
-                btnTakeHeadshot.style.display = 'inline-flex';
-                startPhotoCamera();
-            });
-
-            // Upload Photo Fallback
-            btnUploadHeadshot.addEventListener('click', function() {
-                fileHeadshotInput.click();
-            });
-
-            fileHeadshotInput.addEventListener('change', function(e) {
-                if (e.target.files && e.target.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(evt) {
-                        stopPhotoCamera();
-                        headshotVideo.style.display = 'none';
-                        faceTargetOval.style.display = 'none';
-                        headshotPreviewImg.src = evt.target.result;
-                        headshotPreviewImg.style.display = 'block';
-                        sessionStorage.setItem('visitorPhoto', evt.target.result);
-                        photoCaptured = true;
-
-                        btnTakeHeadshot.style.display = 'none';
-                        btnRetakeHeadshot.style.display = 'inline-flex';
-                    };
-                    reader.readAsDataURL(e.target.files[0]);
-                }
-            });
-
-            // Proceed to Step 4: Review (`review.php`)
-            btnProceedToReview.addEventListener('click', function() {
+            // Proceed to Step 4: Review
+            document.getElementById('btnProceedToReview').addEventListener('click', function() {
                 const personVal = personToVisitInput.value.trim();
                 sessionStorage.setItem('visitorPurpose', selectedPurpose);
                 sessionStorage.setItem('visitorPersonToVisit', personVal || 'N/A - General Campus Visit');
-
-                // If first-time visitor, photo is required
-                if (!isReturning && !photoCaptured) {
-                    // Save default photo if not taken
-                    sessionStorage.setItem('visitorPhoto', '../assets/images/evsu_logo.png');
-                }
 
                 // Navigate to Step 4: Review
                 window.location.href = 'review.php';
             });
         });
     </script>
-    <footer class="main-footer">
-        <div class="footer-container">
-            <p class="footer-copyright">&copy; <?php echo date('Y'); ?> Eastern Visayas State University. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-</html>
+<?php include '../templates/footer.php'; ?>
+

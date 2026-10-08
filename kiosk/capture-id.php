@@ -579,8 +579,8 @@
             // Proceed Action based on Visitor Mode
             btnProceedToNextStep.addEventListener('click', function() {
                 if (isReturningVisitor) {
-                    // Returning visitor skips Step 2 and goes straight to Step 3 (capture-photo.php)
-                    window.location.href = 'capture-photo.php';
+                    // Returning visitor skips Step 2 and goes straight to Step 3 (returning-visitor.php)
+                    window.location.href = 'returning-visitor.php';
                 } else {
                     // First-Time visitor completes Step 2 (registration-form.php)
                     window.location.href = 'registration-form.php';

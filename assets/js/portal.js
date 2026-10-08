@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 80);
     });
 
+    document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
+        if (overlay.parentElement !== document.body) {
+            document.body.appendChild(overlay);
+        }
+    });
+
     // --- Elements Selection ---
     const sidebar = document.getElementById('portalSidebar');
     const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
